@@ -4,29 +4,23 @@ on:
   push:
     paths:
       - 'translation_ru.tsv'
-      - '.github/workflows/validate_tsv.yml'
+      - '.github/workflows/validate_translation.yml'
   pull_request:
     paths:
       - 'translation_ru.tsv'
-      - '.github/workflows/validate_tsv.yml'
 
 jobs:
   validate:
     runs-on: ubuntu-latest
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
+      
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-
-      - name: Validate TSV file
-        run: |
-          python .github/scripts/validate_tsv.py translation_ru.tsv
-
-      - name: Validate tags
-        run: |
-          python .github/scripts/validate_tags.py translation_ru.tsv
-
+      
+      - name: Run validation script
+        run: python .github/scripts/validate_translation.py translation_ru.tsv
